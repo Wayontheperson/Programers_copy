@@ -1,0 +1,42 @@
+from itertools import permutations
+
+def solution(numbers):
+    answer=0
+
+# 숫자 분해
+    new_s=list(numbers)
+
+# 숫자 조합 만들기
+    for i in range(2,len(numbers)+1):
+        pm=list(permutations(numbers,i))
+
+# 숫자 조합 합치기
+        for j in pm:
+            if len(j)<=len(numbers):
+                new_s.append("".join(j))
+# 숫자 조합 int로 바꾸기
+
+        new_s=list(set([int(x) for x in new_s]))
+
+# 0,1 제거
+        if new_s.count(1):
+            new_s.remove(1)
+        if new_s.count(0):
+            new_s.remove(0)
+
+# 에라스토테네스의 체 적용
+        for x in new_s:
+            i=2
+            while i*i<=x:
+                if x%i==0:
+                    answer-=1
+                    break
+                i+=1
+            answer+=1
+
+        return answer
+
+a=solution("24")
+print(a)
+
+
